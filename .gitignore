@@ -1,0 +1,7 @@
+.idea/
+.vscode/
+build/
+tmp/
+
+tmp/*
+!tmp/.gitkeep
