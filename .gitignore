@@ -5,3 +5,5 @@ tmp/
 
 tmp/*
 !tmp/.gitkeep
+coverage/
+node_modules
