@@ -65,6 +65,7 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/styled-components": "^5.1.0",
     "@types/yup": "^0.26.37",
+    "axios-mock-adapter": "^1.18.1",
     "react-test-renderer": "^16.13.1"
   }
 }
