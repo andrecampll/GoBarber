@@ -1,5 +1,5 @@
-import React, { useRef, useCallback } from 'react';
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import React, { useRef, useCallback, useState } from 'react';
+import { FiLogIn, FiMail, FiLock, FiLoader } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -23,6 +23,7 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const [loading, setLoading] = useState(false);
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
@@ -30,6 +31,7 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = useCallback(async (data: SignInFormData) => {
     try {
+      setLoading(true);
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
@@ -49,6 +51,7 @@ const SignIn: React.FC = () => {
       history.push('/dashboard');
     } catch(err) {
       if (err instanceof Yup.ValidationError) {
+        setLoading(false);
         console.log(err);
 
         const errors = getValidationErrors(err);
@@ -78,7 +81,14 @@ const SignIn: React.FC = () => {
             <Input name="email" icon={FiMail} placeholder="E-mail"/>
             <Input name="password" icon={FiLock} type="password" placeholder="Senha"/>
 
-            <Button type="submit">Entrar</Button>
+            <Button type="submit" loading={loading}>
+              {loading ? (
+                <FiLoader />
+              ): (
+                'Entrar'
+              )
+              }
+            </Button>
 
             <Link to="/forgot-password">Esqueci minha senha</Link>
           </Form>
